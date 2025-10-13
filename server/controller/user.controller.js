@@ -86,4 +86,76 @@ const login = async (req,res) => {
     }
 }
 
-module.exports = {register, login};
+const updateUser = async(req,res) => {
+    try {
+        const userId = req.id;
+        const {fullname, email, oldPassword, newPassword} = req.body;
+        if(!fullname && email && oldPassword && newPassword){
+            return res.status(400).json({
+                message:"Please provide data to update",
+                success: false
+            })
+        }   
+        
+        const user = await User.findById(userId);
+        if(!user){
+            return res.status(404).json({
+                message:"User not found",
+                success: false
+            })
+        }
+        const updateData = {};
+
+        if(fullname) updateData.fullname = fullname;
+        if(email) updateData.email = email;
+
+        if(oldPassword && newPassword){
+            const isMatch = await Bcrypt.compare(oldPassword, user.password);
+            if(!isMatch){
+                return res.status(400).json({
+                    message:"Old is password is incorrect",
+                    success: false
+                })
+            }
+            const hashedPassword = await Bcrypt.hash(newPassword, 10);
+            updateData.password = hashedPassword;
+        }else if (oldPassword || newPassword){
+            return res.status(400).json({
+                message:"Both old and new password are required to chnage password",
+                success: false
+            })
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(userId,
+            {$set: updateData},
+            {new: true, runValidators: true}
+        ).select('-password');
+
+        return res.status(200).json({
+            message:"User updated successfully",
+            user: updatedUser,
+            success: true,
+        })
+    } catch (error) {
+        return res.status(400).json({
+            message:error.message,
+            success: false
+        })
+    }
+}
+
+const logout = async(req,res) => {
+    try {
+        return res.status(200).cookie("token","",{maxAge:0}).json({
+            message:"Logout successful",
+            success:true
+        })
+    } catch (error) {
+        return res.status(400).json({
+            message: error.message,
+            success: false
+        })
+    }
+}
+
+module.exports = {register, login, updateUser, logout};
