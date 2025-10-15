@@ -8,8 +8,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 const userRoute = require('./routes/user.route');
-
+const taskRoute = require('./routes/tasl.route');
 
 app.use('/tma/v1/user',userRoute);
+app.use('/tma/v1/task',taskRoute);
 
 module.exports = app;
