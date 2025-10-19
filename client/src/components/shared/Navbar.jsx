@@ -1,22 +1,38 @@
 import { Button } from "@/components/ui/button";
-import { Table } from "lucide-react";
 import React from "react";
 
 const Navbar = () => {
   return (
-    <div>
-      <nav className="max-w-7xl mx-auto my-2">
-        <div className="flex flex-row justify-between items-center">
-          <h1 className="font-bold text-2xl">
-            Task <span className="text-blue-700">Manager</span>
-          </h1>
-          <div className="gap-3 flex">
-            <Button className="bg-blue-500 hover:bg-blue-700">Login</Button>
-            <Button variant="outline" className="border-blue-500">Signup</Button>
-          </div>
+    <nav className="max-w-7xl mx-auto px-4 py-3">
+      <div className="flex items-center justify-between">
+        <h1 className="font-bold text-xl sm:text-2xl">
+          Task <span className="text-blue-700">Manager</span>
+        </h1>
+        <div className="hidden sm:flex gap-3">
+          <Button
+            size="lg"
+            className="bg-blue-700 hover:bg-blue-600 text-white"
+          >
+            Login
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            className="border-blue-500 text-blue-700 hover:bg-blue-50"
+          >
+            Signup
+          </Button>
         </div>
-      </nav>
-    </div>
+        <div className="sm:hidden">
+          <Button
+            size="sm"
+            className="bg-blue-700 hover:bg-blue-600 text-white"
+          >
+            Login
+          </Button>
+        </div>
+      </div>
+    </nav>
   );
 };
 
