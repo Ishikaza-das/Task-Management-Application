@@ -5,7 +5,7 @@ import React from 'react';
 const FeatureCard = ({title, desc, para, Icon}) => {
   return (
     <div>
-      <Card className="w-96 mx-auto">
+      <Card className="w-96 mx-auto h-66">
         <CardHeader className="flex flex-col items-center text-center">
           {Icon && <Icon className="w-12 h-12 mb-2 text-blue-600" />}
           <CardTitle className="text-lg font-semibold">{title}</CardTitle>
