@@ -9,7 +9,7 @@ const Thumbnail = () => {
     <div>
       <Navbar />
       <div>
-        <div className="max-w-7xl mx-auto my-20">
+        <div className="max-w-7xl mx-auto my-20 ">
           <header className="px-2 md:px-0">
             <h1 className="font-bold text-5xl md:text-6xl leading-tight text-gray-900 max-w-3xl">
               Your personal space to <span className="text-blue-600">plan</span>
