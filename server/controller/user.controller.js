@@ -64,8 +64,8 @@ const login = async (req,res) => {
         });
         res.cookie("token",token, {
             httpOnly: true,
-            sameSite: "None",
-            secure: true,
+            sameSite: "Lax",
+            secure: false,
             maxAge: 7*24*60*60*1000
         });
         user = {
@@ -80,6 +80,28 @@ const login = async (req,res) => {
         })
     } catch (error) {
         return res.status(400).json({
+            message: error.message,
+            success: true
+        })
+    }
+}
+
+const getUser = async (req,res) => {
+    try {
+        const userId = req.id;
+        const user = await User.findById(userId).select("-password");
+        if(!user){
+            return res.status(404).json({
+                message:"User not found",
+                success: false
+            })
+        }
+        return res.status(200).json({
+            user,
+            success: true
+        })
+    } catch (error) {
+        return res.status(500).json({
             message: error.message,
             success: true
         })
@@ -158,4 +180,4 @@ const logout = async(req,res) => {
     }
 }
 
-module.exports = {register, login, updateUser, logout};
+module.exports = {register, login, getUser, updateUser, logout};
