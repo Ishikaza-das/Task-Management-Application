@@ -3,6 +3,7 @@ import Signup from "./components/auth/Signup"
 import Dashboard from "./components/pages/Dashboard"
 import Thumbnail from "./components/pages/Thumbnail"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import ProtectedRoutes from "./components/protected/ProtectedRoutes"
 
 
 function App() {
@@ -22,7 +23,11 @@ function App() {
     },
     {
       path:"/dashboard",
-      element:<Dashboard/>
+      element:(
+        <ProtectedRoutes>
+          <Dashboard/>
+        </ProtectedRoutes>
+      )
     }
   ]) 
 

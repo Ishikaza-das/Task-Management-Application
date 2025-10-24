@@ -1,11 +1,27 @@
 import { Button } from "@/components/ui/button";
 import { AuthContext } from "@/context/AuthContext";
+import axios from "axios";
 import React, { useContext } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 const Navbar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const logout = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_USER_API}/logout`,{withCredentials:true});
+      if(response.data.success){
+        setUser(null)
+        navigate("/")
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  }
 
   return (
     <nav className="max-w-7xl mx-auto px-4 py-3">
@@ -17,11 +33,11 @@ const Navbar = () => {
         </h1>
 
           <div className="hidden sm:flex items-center gap-5">
-            {!user ? (
+            {user ? (
               <div>
                 <Button variant="link" size="sm" className="cursor-pointer hover:text-blue-600 text-lg">Dashboard</Button>
               <Button variant="link" size="sm" className="cursor-pointer hover:text-blue-600 text-lg">Task</Button>
-              <Button variant="link" size="sm" className="cursor-pointer hover:text-blue-600 text-lg">Logout</Button>
+              <Button variant="link" size="sm" className="cursor-pointer hover:text-blue-600 text-lg" onClick={logout}>Logout</Button>
               </div>
             ) : (
               <>
