@@ -1,5 +1,6 @@
 import Login from "./components/auth/Login"
 import Signup from "./components/auth/Signup"
+import Dashboard from "./components/pages/Dashboard"
 import Thumbnail from "./components/pages/Thumbnail"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
@@ -18,6 +19,10 @@ function App() {
     {
       path:"/login",
       element:<Login/>
+    },
+    {
+      path:"/dashboard",
+      element:<Dashboard/>
     }
   ]) 
 
