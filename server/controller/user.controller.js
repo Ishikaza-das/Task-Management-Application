@@ -86,6 +86,28 @@ const login = async (req,res) => {
     }
 }
 
+const getUser = async (req,res) => {
+    try {
+        const userId = req.id;
+        const user = await User.findOne({_id: userId});
+        if(!user){
+            return res.status(400).json({
+                message:"User not found",
+                success: true
+            })
+        }
+        return res.status(200).json({
+            user,
+            success: true
+        })
+    } catch (error) {
+        return res.status(404).json({
+            message: error.message,
+            success: true
+        })
+    }
+}
+
 const updateUser = async(req,res) => {
     try {
         const userId = req.id;
@@ -158,4 +180,4 @@ const logout = async(req,res) => {
     }
 }
 
-module.exports = {register, login, updateUser, logout};
+module.exports = {register, login, getUser, updateUser, logout};

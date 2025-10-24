@@ -5,6 +5,11 @@ const cros = require('cors');
 
 const app = express();
 app.use(express.json());
+app.use(cros({
+    origin: process.env.FRONTEND,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+}))
 app.use(cookieParser());
 
 const userRoute = require('./routes/user.route');
