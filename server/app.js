@@ -1,13 +1,12 @@
 require('dotenv').config({quiet: true});
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const cros = require('cors');
+const cors = require('cors');
 
 const app = express();
 app.use(express.json());
-app.use(cros({
+app.use(cors({
     origin: process.env.FRONTEND,
-    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
 }))
 app.use(cookieParser());

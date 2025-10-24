@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { AuthContext } from "@/context/AuthContext";
 
 const Login = () => {
     const [input, setInput] = useState({
@@ -22,6 +23,7 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { setUser } = useContext(AuthContext)
 
   const inputHandler = (e) => {
     setInput({ ...input, [e.target.id]: e.target.value });
@@ -44,6 +46,7 @@ const Login = () => {
         { withCredentials: true }
       );
       if (res.data.success) {
+        setUser(res.data.user)
         toast.success(res.data.message);
         navigate("/dashboard");
       }
