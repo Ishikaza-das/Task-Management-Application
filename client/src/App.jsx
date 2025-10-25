@@ -4,6 +4,7 @@ import Dashboard from "./components/pages/Dashboard"
 import Thumbnail from "./components/pages/Thumbnail"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import ProtectedRoutes from "./components/protected/ProtectedRoutes"
+import TaskBoard from "./components/pages/TaskBoard"
 
 
 function App() {
@@ -26,6 +27,14 @@ function App() {
       element:(
         <ProtectedRoutes>
           <Dashboard/>
+        </ProtectedRoutes>
+      )
+    },
+    {
+      path:"/task-create",
+      element:(
+        <ProtectedRoutes>
+          <TaskBoard/>
         </ProtectedRoutes>
       )
     }

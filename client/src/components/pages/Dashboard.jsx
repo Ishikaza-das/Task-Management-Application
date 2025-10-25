@@ -6,7 +6,7 @@ const Dashboard = () => {
     <div>
         <Navbar/>
         <div>
-            
+            This is Dashboard
         </div>
     </div>
   )
