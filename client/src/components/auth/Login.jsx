@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -23,7 +23,7 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { setUser } = useContext(AuthContext)
+  const { setUser, user } = useContext(AuthContext)
 
   const inputHandler = (e) => {
     setInput({ ...input, [e.target.id]: e.target.value });
@@ -37,26 +37,33 @@ const Login = () => {
     formData.append("password", input.password);
     try {
       setLoading(true);
-      const res = await axios.post(
+      const response = await axios.post(
         `${import.meta.env.VITE_USER_API}/login`,
         formData,
         {
-          headers:{"Content-Type":"application/json"}
-        },
-        { withCredentials: true }
+          headers:{"Content-Type":"application/json"},
+          withCredentials: true
+        }
       );
-      if (res.data.success) {
-        setUser(res.data.user)
-        toast.success(res.data.message);
+      if (response.data.success) {
+        setUser(response.data.user)
+        toast.success(response.data.message);
         navigate("/dashboard");
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.res?.data?.message);
+      toast.error(error.response?.data?.message);
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if(user){
+      navigate("/dashboard");
+    }
+  },[user])
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <Card className="w-full max-w-md md:max-w-lg p-6 shadow-lg">

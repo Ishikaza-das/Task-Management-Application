@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { AuthContext } from "@/context/AuthContext";
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -23,6 +24,7 @@ const Signup = () => {
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const {user} = useContext(AuthContext);
 
   const inputHandler = (e) => {
     setInput({ ...input, [e.target.id]: e.target.value });
@@ -36,25 +38,31 @@ const Signup = () => {
     formData.append("password", input.password);
     try {
       setLoading(true);
-      const res = await axios.post(
+      const response = await axios.post(
         `${import.meta.env.VITE_USER_API}/register`,
         formData,
         {
-          headers:{"Content-Type":"application/json"}
-        },
-        { withCredentials: true }
+          headers:{"Content-Type":"application/json"},
+          withCredentials: true
+        }
       );
-      if (res.data.success) {
-        toast.success(res.data.message);
+      if (response.data.success) {
+        toast.success(response.data.message);
         navigate("/dashboard");
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.res?.data?.message);
+      toast.error(error.response?.data?.message);
     } finally {
       setLoading(false);
     }
   };
+   useEffect(() => {
+      if(user){
+        navigate("/dashboard");
+      }
+    },[user])
+
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-gray-50">
       <Card className="w-full max-w-md md:max-w-lg p-6 shadow-lg">

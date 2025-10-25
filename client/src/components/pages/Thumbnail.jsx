@@ -1,10 +1,19 @@
 import Navbar from "@/components/shared/Navbar";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import FeatureCard from "./components/FeatureCard";
 import { Notebook, User, Watch } from "lucide-react";
 import Footer from "../shared/Footer";
+import { useNavigate } from "react-router";
+import { AuthContext } from "@/context/AuthContext";
 
 const Thumbnail = () => {
+  const navigate = useNavigate();
+  const {user} = useContext(AuthContext);
+   useEffect(() => {
+      if(user){
+        navigate("/dashboard");
+      }
+    },[user])
   return (
     <div>
       <Navbar />
