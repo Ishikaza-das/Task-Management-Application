@@ -35,14 +35,14 @@ const Navbar = () => {
         <div className="hidden sm:flex items-center gap-5">
           {user ? (
             <>
-              <Button variant="link" onClick={() => navigate("/dashboard")}>Dashboard</Button>
-              <Button variant="link" onClick={() => navigate("/task-create")}>Task</Button>
-              <Button variant="link" onClick={logout}>Logout</Button>
+              <Button variant="link" className="text-lg cursor-pointer hover:text-blue-500" onClick={() => navigate("/dashboard")}>Dashboard</Button>
+              <Button variant="link" className="text-lg cursor-pointer hover:text-blue-500" onClick={() => navigate("/task-create")}>Task</Button>
+              <Button variant="link" className="text-lg cursor-pointer hover:text-red-500" onClick={logout}>Logout</Button>
             </>
           ) : (
             <>
-              <Button onClick={() => navigate("/login")}>Login</Button>
-              <Button variant="outline" onClick={() => navigate("/signup")}>Signup</Button>
+              <Button className="w-full text-left bg-blue-700 hover:bg-blue-600 text-white" onClick={() => navigate("/login")}>Login</Button>
+              <Button variant="outline" className="w-full text-left border-blue-500 text-blue-700 hover:bg-blue-50" onClick={() => navigate("/signup")}>Signup</Button>
             </>
           )}
         </div>
