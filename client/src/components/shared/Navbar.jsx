@@ -33,6 +33,7 @@ const Navbar = () => {
             >
               Task
             </Button>
+            
             <ProfileCircle />
           </>
         ) : (

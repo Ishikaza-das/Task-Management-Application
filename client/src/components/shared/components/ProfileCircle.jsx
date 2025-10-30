@@ -49,6 +49,7 @@ const ProfileCircle = () => {
           <Button
             variant="link"
             className="text-lg cursor-pointer"
+            onClick={() => navigate("/profile")}
           >
             Profile
           </Button>
