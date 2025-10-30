@@ -32,7 +32,6 @@ const Login = () => {
   const loginHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("fullname", input.fullname);
     formData.append("email", input.email);
     formData.append("password", input.password);
     try {

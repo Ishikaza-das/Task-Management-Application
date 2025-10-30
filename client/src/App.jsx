@@ -5,6 +5,7 @@ import Thumbnail from "./components/pages/Thumbnail"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import ProtectedRoutes from "./components/protected/ProtectedRoutes"
 import TaskBoard from "./components/pages/TaskBoard"
+import Profile from "./components/pages/Profile"
 
 
 function App() {
@@ -35,6 +36,14 @@ function App() {
       element:(
         <ProtectedRoutes>
           <TaskBoard/>
+        </ProtectedRoutes>
+      )
+    },
+    {
+      path:"/profile",
+      element:(
+        <ProtectedRoutes>
+          <Profile/>
         </ProtectedRoutes>
       )
     }
