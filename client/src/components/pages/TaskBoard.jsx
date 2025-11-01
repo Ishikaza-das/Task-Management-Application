@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Label } from "@radix-ui/react-label";
@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select";
 import axios from "axios";
 import { toast } from "sonner";
+import { TaskContext } from "@/context/TaskContext";
 
 const TaskBoard = () => {
   const [input, setInput] = useState({
@@ -23,6 +24,7 @@ const TaskBoard = () => {
     due_date: "",
     priority_level: "",
   });
+  const { fetchTasks } = useContext(TaskContext);
 
   const inputHnadler = (e) => {
     setInput({ ...input, [e.target.id]: e.target.value });
@@ -51,6 +53,7 @@ const TaskBoard = () => {
       );
       if (response.data.success) {
         toast.success(response.data.message);
+        await fetchTasks();
         setInput({
           title: "",
           description: "",

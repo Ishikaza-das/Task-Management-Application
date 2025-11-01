@@ -28,7 +28,7 @@ const TaskCard = ({ task }) => {
         </CardHeader>
         <CardContent>
           <div className="flex gap-3">
-            <h1>{task?.due_date}</h1>
+            <h1>Dead Line: {task?.due_date}</h1>
             <Badge
               className={`${
                 task.progress === "pending" ? "bg-blue-500" : "bg-green-500"
