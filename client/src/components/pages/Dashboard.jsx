@@ -5,6 +5,9 @@ import { TaskContext } from "@/context/TaskContext";
 
 const Dashboard = () => {
   const {allTask} = useContext(TaskContext);
+
+  const completedCount = allTask.filter((task) => task.progress?.toLowerCase() === "complete").length;
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
@@ -25,7 +28,7 @@ const Dashboard = () => {
           <div className="bg-amber-400 text-gray-900 rounded-2xl shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition-all duration-300">
             <div>
               <h2 className="text-2xl font-semibold mb-2">Tasks Completed</h2>
-              <p className="text-6xl font-bold">18</p>
+              <p className="text-6xl font-bold">{completedCount}</p>
             </div>
             <p className="mt-4 text-gray-800">Tasks successfully finished</p>
           </div>
