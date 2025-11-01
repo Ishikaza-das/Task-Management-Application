@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import Navbar from "../shared/Navbar";
 import Task from "./components/Task";
+import { TaskContext } from "@/context/TaskContext";
 
 const Dashboard = () => {
+  const {allTask} = useContext(TaskContext);
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
@@ -15,7 +17,7 @@ const Dashboard = () => {
           <div className="bg-blue-500 text-white rounded-2xl shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition-all duration-300">
             <div>
               <h2 className="text-2xl font-semibold mb-2">Total Tasks</h2>
-              <p className="text-6xl font-bold">24</p>
+              <p className="text-6xl font-bold">{allTask.length}</p>
             </div>
             <p className="mt-4 text-blue-100">All tasks you have created so far</p>
           </div>

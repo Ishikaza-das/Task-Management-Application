@@ -5,7 +5,7 @@ const createTask = async (req, res) => {
     const { title, description, due_date, priority_level, progress } = req.body;
     const userId = req.id;
 
-    if (!title || !description || !due_date || !priority_level) {
+    if (!title || !due_date || !priority_level) {
       return res.status(400).json({
         message: "Something is missing",
         success: false,

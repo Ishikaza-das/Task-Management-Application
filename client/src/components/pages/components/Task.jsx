@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import {
   Select,
   SelectContent,
@@ -8,28 +8,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import TaskCard from "./TaskCard";
-import axios from "axios";
-
-const template = [1,2,3,4,5,6];
+import { TaskContext } from "@/context/TaskContext";
 
 const Task = () => {
-  const [allTask, setAllTask] = useState([])
-
-  useEffect(() => {
-    const fetchTask = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_TASK_API}/getTask`,{
-          withCredentials: true
-        })
-        if(response.data.success){
-          setAllTask(response.data.task)
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    fetchTask();
-  },[])
+ const {allTask} = useContext(TaskContext)
   return (
     <>
     <div className="flex py-4 md:gap-4 justify-between md:justify-normal">
