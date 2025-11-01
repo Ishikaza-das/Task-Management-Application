@@ -24,9 +24,10 @@ const TaskBoard = () => {
     due_date: "",
     priority_level: "",
   });
-  const { fetchTasks } = useContext(TaskContext);
 
-  const inputHnadler = (e) => {
+  const { refreshTasks } = useContext(TaskContext);
+
+  const inputHandler = (e) => {
     setInput({ ...input, [e.target.id]: e.target.value });
   };
 
@@ -36,6 +37,7 @@ const TaskBoard = () => {
 
   const createTask = async (e) => {
     e.preventDefault();
+
     const formData = new FormData();
     formData.append("title", input.title);
     formData.append("description", input.description);
@@ -48,12 +50,13 @@ const TaskBoard = () => {
         formData,
         {
           withCredentials: true,
-          headers: { "Content-Type": "application/json" },
+           headers:{"Content-Type":"application/json"},
         }
       );
+
       if (response.data.success) {
         toast.success(response.data.message);
-        await fetchTasks();
+        await refreshTasks();
         setInput({
           title: "",
           description: "",
@@ -62,8 +65,8 @@ const TaskBoard = () => {
         });
       }
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
+      console.error(error);
+      toast.error(error.response?.data?.message || "Error creating task");
     }
   };
 
@@ -87,7 +90,7 @@ const TaskBoard = () => {
                     required
                     className="h-12 text-base"
                     value={input.title}
-                    onChange={inputHnadler}
+                    onChange={inputHandler}
                   />
                 </div>
 
@@ -95,11 +98,10 @@ const TaskBoard = () => {
                   <Label className="font-medium">Description</Label>
                   <Textarea
                     id="description"
-                    type="text"
                     placeholder="TODO this"
                     className="h-12 text-base"
                     value={input.description}
-                    onChange={inputHnadler}
+                    onChange={inputHandler}
                   />
                 </div>
 
@@ -111,13 +113,16 @@ const TaskBoard = () => {
                     required
                     className="h-12 text-base"
                     value={input.due_date}
-                    onChange={inputHnadler}
+                    onChange={inputHandler}
                   />
                 </div>
 
                 <div className="grid gap-3">
                   <Label className="font-medium">Priority Level</Label>
-                  <Select value={input.priority_level} onValueChange={selectHandler}>
+                  <Select
+                    value={input.priority_level}
+                    onValueChange={selectHandler}
+                  >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select a Level" />
                     </SelectTrigger>
@@ -130,6 +135,7 @@ const TaskBoard = () => {
                     </SelectContent>
                   </Select>
                 </div>
+
                 <Button
                   variant="destructive"
                   className="w-full h-12 text-lg cursor-pointer"

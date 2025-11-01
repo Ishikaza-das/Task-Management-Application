@@ -16,7 +16,7 @@ export const TaskProvider = ({ children }) => {
         setAllTask(response.data.task);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -24,7 +24,9 @@ export const TaskProvider = ({ children }) => {
     fetchTasks();
   }, []);
 
-  const refreshTasks = () => fetchTasks();
+  const refreshTasks = async () => {
+    await fetchTasks();
+  };
 
   return (
     <TaskContext.Provider value={{ allTask, refreshTasks }}>

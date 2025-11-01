@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Card,
   CardContent,
@@ -15,9 +15,11 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { TaskContext } from "@/context/TaskContext";
 import { toast } from "sonner";
+import UpdateTask from "./UpdateTask";
 
 const TaskCard = ({ task }) => {
   const { refreshTasks } = useContext(TaskContext);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleProgressChange = async (e) => {
     const newProgress = e.target.checked ? "complete" : "pending";
@@ -41,7 +43,23 @@ const TaskCard = ({ task }) => {
     }
   };
 
+  const deleteTask = async () => {
+    try {
+      const response = await axios.delete(`${import.meta.env.VITE_TASK_API}/delete-task/${task._id}`,
+        {withCredentials: true}
+      )
+      if(response.data.success){
+        toast.success(response.data.message);
+        refreshTasks()
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  }
+
   return (
+    <>
     <Card className="w-full max-w-sm relative">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
@@ -51,8 +69,6 @@ const TaskCard = ({ task }) => {
               {task?.description}
             </CardDescription>
           </div>
-
-          {/* Popover Menu */}
           <Popover>
             <PopoverTrigger asChild>
               <button className="p-1 hover:bg-gray-100 rounded-md">
@@ -66,7 +82,6 @@ const TaskCard = ({ task }) => {
               className="w-48 sm:w-56 p-3 rounded-lg shadow-md border bg-white"
             >
               <div className="flex flex-col gap-3">
-                {/* ✅ Checkbox to mark complete */}
                 <div className="flex items-center gap-2">
                   <Input
                     type="checkbox"
@@ -86,6 +101,7 @@ const TaskCard = ({ task }) => {
                 <Button
                   variant="ghost"
                   className="w-full justify-start text-base hover:bg-gray-100"
+                  onClick={() => setIsOpen(true)}
                 >
                   Edit
                 </Button>
@@ -93,6 +109,7 @@ const TaskCard = ({ task }) => {
                 <Button
                   variant="ghost"
                   className="w-full justify-start text-base text-red-500 hover:bg-red-50"
+                  onClick={deleteTask}
                 >
                   Delete
                 </Button>
@@ -128,6 +145,8 @@ const TaskCard = ({ task }) => {
         </div>
       </CardContent>
     </Card>
+    <UpdateTask open={isOpen} setOpen={setIsOpen} task={task}/>
+    </>
   );
 };
 
