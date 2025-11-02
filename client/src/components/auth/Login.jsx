@@ -68,10 +68,10 @@ const Login = () => {
       <Card className="w-full max-w-md md:max-w-lg p-6 shadow-lg">
               <CardHeader className="text-center">
                 <CardTitle className="text-3xl font-bold">
-                  Create your account
+                  Login your account
                 </CardTitle>
                 <CardDescription className="text-base text-gray-600">
-                  Enter your fullname, email and password below to access your tasks
+                  Enter your email and password below to access your tasks
                 </CardDescription>
               </CardHeader>
               <CardContent>
