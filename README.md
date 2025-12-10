@@ -50,6 +50,10 @@ Frontend (frontend/.env.demo)
 - VITE_USER_API - Full URL to the users API endpoint
 - VITE_TASK_API - Full URL to the tasks API endpoint
 
+Hosted Url
+- Frontend - https://task-management-application-frontend-l542.onrender.com
+- Backend - https://task-management-application-backend-jtn6.onrender.com
+
 Notes about secrets
 - The demo environment files in this repository contain example values provided by the project owner. For security, do not commit production secrets. Replace these with your own credentials before deploying to production.
 
